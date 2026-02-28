@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mijn Kunstwerken Gallery</title>
+  
+  <!-- Font Awesome voor social icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #0f0f0f;
+      color: #e0e0e0;
+      line-height: 1.6;
+      -webkit-tap-highlight-color: transparent; /* voorkomt blauwe highlight op iOS */
+    }
+
+    /* === TOP NAVIGATIE === */
+    .top-nav {
+      background: #1a1a2e;
+      padding: 1rem 5vw;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #333;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      color: #d4af37;
+      font-size: 1.6rem;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .nav-links a {
+      color: #e0e0e0;
+      margin: 0 1.2rem;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #d4af37;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 1.2rem;
+    }
+
+    .social-icons a {
+      color: #e0e0e0;
+      font-size: 1.5rem;
+      transition: color 0.3s, transform 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: #d4af37;
+      transform: scale(1.15);
+    }
+
+    header {
+      text-align: center;
+      padding: 4rem 1rem 3rem;
+      background: linear-gradient(to bottom, #1a1a2e, #0f0f0f);
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      margin-bottom: 0.5rem;
+      color: #d4af37;
+    }
+
+    header p {
+      font-size: 1.3rem;
+      opacity: 0.85;
+      max-width: 600px;
+      margin: 1rem auto 0;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      padding: 2rem 5vw;
+      max-width: 1800px;
+      margin: 0 auto;
+    }
+
+    figure {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #1a1a1a;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    figure:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 20px 50px rgba(212,175,55,0.25);
+    }
+
+    .gallery-link {
+      display: block;
+      cursor: pointer;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+    }
+
+    figure:hover img {
+      transform: scale(1.08);
+    }
+
+    figcaption {
+      padding: 1.2rem 1.4rem;
+      font-size: 0.95rem;
+      color: #bbb;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      opacity: 0.95;
+      transition: background 0.4s;
+    }
+
+    figure:hover figcaption {
+      background: linear-gradient(to top, rgba(30,30,50,0.9), rgba(0,0,0,0.4));
+    }
+
+    /* === LIGHTBOX met mobiele fixes === */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.94);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      overflow: auto;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .lightbox:target {
+      display: flex;
+    }
+
+    .lightbox .close-area {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      cursor: pointer;
+    }
+
+    .lightbox img {
+      max-width: 95vw;
+      max-height: 92vh;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 0 60px rgba(212,175,55,0.4);
+      position: relative;
+      z-index: 2;
+      transition: transform 0.4s ease;
+    }
+
+    .lightbox:target img {
+      transform: scale(1);
+    }
+
+    .close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 3.5rem;
+      height: 3.5rem;
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      font-size: 2.8rem;
+      line-height: 3.5rem;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 50%;
+      z-index: 10;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    .close:hover,
+    .close:active {
+      background: #d4af37;
+      transform: scale(1.15);
+    }
+
+    /* Extra grote tap-zone voor mobiel */
+    .close::before {
+      content: "";
+      position: absolute;
+      inset: -2rem;          /* maakt tap-zone veel groter */
+      z-index: 9;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 1rem;
+      font-size: 0.9rem;
+      opacity: 0.7;
+      border-top: 1px solid #222;
+    }
+
+    footer a {
+      color: #d4af37;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .nav-container {
+        flex-direction: column;
+        text-align: center;
+      }
+      .nav-links {
+        margin: 1rem 0;
+      }
+      .gallery {
+        gap: 1.4rem;
+        padding: 1.5rem 4vw;
+      }
+      .close {
+        top: 1rem;
+        right: 1rem;
+        width: 4rem;
+        height: 4rem;
+        font-size: 3.2rem;
+      }
+      .close::before {
+        inset: -2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATIE -->
+  <nav class="top-nav">
+    <div class="nav-container">
+      <a href="#" class="logo">Kunst van Thibault P</a>
+
+      <div class="nav-links">
+      <a href="index.html" class="active">Gallery</a>
+      <a href="about.html">Over mij</a>
+   </div>
+      <div class="social-icons">
+        <a href="https://www.instagram.com/polet_creations_/" target="_blank" aria-label="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.tiktok.com/@polet_thibault" target="_blank" aria-label="TikTok">
+          <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="https://www.facebook.com/polet.creations/" target="_blank" aria-label="Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </div>
+      </div>
+    </div>
+  </nav>
+
+  <header>
+    <h1>Mijn Kunstwerken</h1>
+    <p>Klik op een werk voor een grotere weergave – tik op achtergrond of × om te sluiten</p>
+  </header>
+
+  <main class="gallery">
+
+    <!-- Kunstwerk 1 -->
+    <figure>
+      <a href="#img1" class="gallery-link">
+        <img src="images/kunstwerk-1.jpg" alt="Abstract blauw-rood landschap" loading="lazy">
+      </a>
+      <figcaption>Blauw-rood landschap • 2025 • acryl op doek • 100×80 cm</figcaption>
+    </figure>
+
+    <!-- Kunstwerk 2 -->
+    <figure>
+      <a href="#img2" class="gallery-link">
+        <img src="images/kunstwerk-2.jpg" alt="Portret in pastelkleuren" loading="lazy">
+      </a>
+      <figcaption>Portret van Luna • 2025 • pastel • 50×70 cm</figcaption>
+    </figure>
+
+    <!-- Kunstwerk 3 -->
+    <figure>
+      <a href="#img3" class="gallery-link">
+        <img src="images/kunstwerk-3.jpg" alt="Minimalistische compositie" loading="lazy">
+      </a>
+      <figcaption>Compositie nr. 17 • 2024 • inkt • 40×40 cm</figcaption>
+    </figure>
+
+    <!-- Voeg hier meer kunstwerken toe -->
+
+  </main>
+
+  <!-- LIGHTBOXEN met fixes -->
+  <div class="lightbox" id="img1">
+    <a href="#" class="close-area"></a>
+    <a href="#" class="close">×</a>
+    <img src="images/kunstwerk-1.jpg" alt="Groot: Abstract blauw-rood landschap">
+  </div>
+
+  <div class="lightbox" id="img2">
+    <a href="#" class="close-area"></a>
+    <a href="#" class="close">×</a>
+    <img src="images/kunstwerk-2.jpg" alt="Groot: Portret van Luna">
+  </div>
+
+  <div class="lightbox" id="img3">
+    <a href="#" class="close-area"></a>
+    <a href="#" class="close">×</a>
+    <img src="images/kunstwerk-3.jpg" alt="Groot: Compositie nr. 17">
+  </div>
+
+  <!-- Dupliceer .lightbox voor elke extra afbeelding -->
+
+  <footer>
+    <p>© 2026 — Jouw Naam • 
+      <a href="https://github.com/jouw-gebruikersnaam/jouw-repo">GitHub</a>
+    </p>
+  </footer>
+
+</body>
+</html>

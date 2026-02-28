@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Over Mij - Mijn Kunstwerken</title>
+  
+  <!-- Font Awesome voor social icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* Kopieer ALLE <style> uit je index.html hierheen 
+       (of maak later een apart styles.css als je wilt) */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #0f0f0f;
+      color: #e0e0e0;
+      line-height: 1.6;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Top navigatie (zelfde als index.html) */
+    .top-nav {
+      background: #1a1a2e;
+      padding: 1rem 5vw;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #333;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .logo { color: #d4af37; font-size: 1.6rem; font-weight: bold; text-decoration: none; }
+    .nav-links a { color: #e0e0e0; margin: 0 1.2rem; text-decoration: none; font-size: 1.1rem; }
+    .nav-links a:hover, .nav-links a.active { color: #d4af37; }
+    .social-icons { display: flex; gap: 1.2rem; }
+    .social-icons a { color: #e0e0e0; font-size: 1.5rem; transition: all 0.3s; }
+    .social-icons a:hover { color: #d4af37; transform: scale(1.15); }
+
+    header {
+      text-align: center;
+      padding: 5rem 1rem 3rem;
+    }
+    h1 {
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      color: #d4af37;
+      margin-bottom: 1rem;
+    }
+
+    .about-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 5vw 4rem;
+      font-size: 1.15rem;
+    }
+    .about-content h2 {
+      color: #d4af37;
+      margin: 2.5rem 0 1rem;
+      font-size: 1.8rem;
+    }
+    .about-content p {
+      margin-bottom: 1.4rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 1rem;
+      font-size: 0.9rem;
+      opacity: 0.7;
+      border-top: 1px solid #222;
+    }
+    footer a { color: #d4af37; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .nav-container { flex-direction: column; text-align: center; }
+      .nav-links { margin: 1rem 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATIE (de "Over mij" link is nu actief) -->
+  <nav class="top-nav">
+    <div class="nav-container">
+      <a href="index.html" class="logo">Kunst van Thibault P</a>
+      
+      <div class="nav-links">
+        <a href="index.html">Gallery</a>
+        <a href="about.html" class="active">Over mij</a>
+      </div>
+
+      <div class="social-icons">
+        <a href="https://www.instagram.com/polet_creations_/" target="_blank" aria-label="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.tiktok.com/@polet_thibault" target="_blank" aria-label="TikTok">
+          <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="https://www.facebook.com/polet.creations/" target="_blank" aria-label="Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <header>
+    <h1>Over Mij</h1>
+  </header>
+
+  <section class="about-content">
+    <h2>Wie ben ik?</h2>
+    <p>Hoi! Ik ben [Jouw Naam], een gepassioneerde kunstenaar uit [stad/plaats]. Ik werk voornamelijk met acryl, pastel, inkt en mixed media. Mijn werk draait vaak om emoties, natuur, dromen en de schoonheid in het alledaagse.</p>
+
+    <h2>Mijn stijl</h2>
+    <p>Ik hou van contrasterende kleuren, texturen en een mix tussen abstract en figuratief. Inspiratie haal ik uit reizen, muziek, oude foto's en soms gewoon uit hoe het licht op een regenachtige middag valt.</p>
+
+    <h2>Contact & meer</h2>
+    <p>Wil je een werk kopen, een opdracht geven of gewoon even kletsen over kunst? Stuur me gerust een berichtje via Instagram of TikTok!</p>
+
+    <!-- Optioneel: voeg een foto van jezelf toe -->
+    <!-- <img src="images/jij.jpg" alt="Foto van [Jouw Naam]" style="max-width:100%; border-radius:12px; margin:2rem 0;"> -->
+  </section>
+
+  <footer>
+    <p>© 2026 — [Jouw Naam] • 
+      <a href="https://github.com/jouw-gebruikersnaam/jouw-repo">GitHub</a>
+    </p>
+  </footer>
+
+</body>
+</html>
