@@ -17,21 +17,33 @@
 
     body {
       font-family: system-ui, -apple-system, sans-serif;
-      background: #0f0f0f;
       color: #e0e0e0;
       line-height: 1.6;
-      -webkit-tap-highlight-color: transparent; /* voorkomt blauwe highlight op iOS */
+      -webkit-tap-highlight-color: transparent;
+
+      /* === ACHTERGROND AFBEELDING === */
+      background-image: url('images/background.jpg');
+      background-size: 2000px 800px;
+      background-position: center;
+      background-attachment: fixed;     /* blijft op zijn plek bij scrollen */
+      background-repeat: auto;
+
+      /* Donkere overlay zodat de kunstwerken en tekst goed leesbaar blijven */
+      background-color: rgba(174, 196, 214, 0.75); /* fallback kleur */
+      background-blend-mode: multiply;  /* donkerder maken zonder de kleuren te vervormen */
     }
 
     /* === TOP NAVIGATIE === */
     .top-nav {
-      background: #1a1a2e;
+      background: rgba(26, 26, 46, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       padding: 1rem 5vw;
       position: sticky;
       top: 0;
       z-index: 100;
-      border-bottom: 1px solid #333;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      border-bottom: 1px solid #444;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
     }
 
     .nav-container {
@@ -59,50 +71,54 @@
       transition: color 0.3s;
     }
 
-    .nav-links a:hover {
+    .nav-links a:hover,
+    .nav-links a.active {
       color: #d4af37;
+      border-bottom: 2px solid #d4af37;
+      padding-bottom: 4px;
     }
 
     .social-icons {
       display: flex;
-      gap: 1.2rem;
+      gap: 1.4rem;
     }
 
     .social-icons a {
       color: #e0e0e0;
-      font-size: 1.5rem;
-      transition: color 0.3s, transform 0.3s;
+      font-size: 1.6rem;
+      transition: all 0.3s;
     }
 
     .social-icons a:hover {
       color: #d4af37;
-      transform: scale(1.15);
+      transform: scale(1.18);
     }
 
     header {
       text-align: center;
-      padding: 4rem 1rem 3rem;
-      background: linear-gradient(to bottom, #1a1a2e, #0f0f0f);
+      padding: 6rem 1rem 4rem;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
     }
 
     h1 {
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      margin-bottom: 0.5rem;
+      font-size: clamp(3rem, 8vw, 5.5rem);
       color: #d4af37;
+      margin-bottom: 0.6rem;
+      text-shadow: 0 3px 12px rgba(0,0,0,0.8);
     }
 
     header p {
-      font-size: 1.3rem;
-      opacity: 0.85;
-      max-width: 600px;
-      margin: 1rem auto 0;
+      font-size: 1.35rem;
+      opacity: 0.9;
+      max-width: 680px;
+      margin: 0 auto;
     }
 
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-      padding: 2rem 5vw;
+      gap: 2.2rem;
+      padding: 2rem 5vw 4rem;
       max-width: 1800px;
       margin: 0 auto;
     }
@@ -110,20 +126,19 @@
     figure {
       position: relative;
       overflow: hidden;
-      border-radius: 12px;
-      background: #1a1a1a;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      border-radius: 14px;
+      background: #111;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.7);
+      transition: all 0.4s ease;
     }
 
     figure:hover {
-      transform: translateY(-12px);
-      box-shadow: 0 20px 50px rgba(212,175,55,0.25);
+      transform: translateY(-14px);
+      box-shadow: 0 22px 55px rgba(212,175,55,0.28);
     }
 
     .gallery-link {
       display: block;
-      cursor: pointer;
     }
 
     img {
@@ -132,43 +147,40 @@
       display: block;
       aspect-ratio: 4 / 5;
       object-fit: cover;
-      transition: transform 0.45s ease;
+      transition: transform 0.5s ease;
     }
 
     figure:hover img {
-      transform: scale(1.08);
+      transform: scale(1.09);
     }
 
     figcaption {
-      padding: 1.2rem 1.4rem;
-      font-size: 0.95rem;
-      color: #bbb;
-      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+      padding: 1.3rem 1.5rem;
+      font-size: 0.98rem;
+      color: #ccc;
+      background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      opacity: 0.95;
       transition: background 0.4s;
     }
 
     figure:hover figcaption {
-      background: linear-gradient(to top, rgba(30,30,50,0.9), rgba(0,0,0,0.4));
+      background: linear-gradient(to top, rgba(211, 207, 150, 0.92), rgba(0,0,0,0.5));
     }
 
-    /* === LIGHTBOX met mobiele fixes === */
+    /* Lightbox */
     .lightbox {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.94);
+      background: rgba(0,0,0,0.96);
       z-index: 9999;
       align-items: center;
       justify-content: center;
       padding: 1rem;
       overflow: auto;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
     }
 
     .lightbox:target {
@@ -187,58 +199,46 @@
       max-height: 92vh;
       object-fit: contain;
       border-radius: 12px;
-      box-shadow: 0 0 60px rgba(212,175,55,0.4);
-      position: relative;
+      box-shadow: 0 0 70px rgba(212,175,55,0.35);
       z-index: 2;
-      transition: transform 0.4s ease;
-    }
-
-    .lightbox:target img {
-      transform: scale(1);
     }
 
     .close {
       position: absolute;
       top: 1.5rem;
       right: 1.5rem;
-      width: 3.5rem;
-      height: 3.5rem;
-      background: rgba(0,0,0,0.7);
-      color: #fff;
-      font-size: 2.8rem;
-      line-height: 3.5rem;
+      width: 3.8rem;
+      height: 3.8rem;
+      background: rgba(0,0,0,0.75);
+      color: white;
+      font-size: 3rem;
+      line-height: 3.8rem;
       text-align: center;
-      text-decoration: none;
       border-radius: 50%;
       z-index: 10;
-      transition: all 0.25s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       cursor: pointer;
-      touch-action: manipulation;
+      transition: all 0.25s;
     }
 
-    .close:hover,
-    .close:active {
+    .close:hover {
       background: #d4af37;
-      transform: scale(1.15);
+      transform: scale(1.12);
     }
 
-    /* Extra grote tap-zone voor mobiel */
     .close::before {
       content: "";
       position: absolute;
-      inset: -2rem;          /* maakt tap-zone veel groter */
+      inset: -2.5rem;
       z-index: 9;
     }
 
     footer {
       text-align: center;
-      padding: 3rem 1rem;
-      font-size: 0.9rem;
-      opacity: 0.7;
+      padding: 4rem 1rem 2rem;
+      font-size: 0.95rem;
+      opacity: 0.75;
       border-top: 1px solid #222;
+      background: rgba(10,10,14,0.8);
     }
 
     footer a {
@@ -246,46 +246,26 @@
       text-decoration: none;
     }
 
-    footer a:hover {
-      text-decoration: underline;
-    }
-
     @media (max-width: 600px) {
-      .nav-container {
-        flex-direction: column;
-        text-align: center;
-      }
-      .nav-links {
-        margin: 1rem 0;
-      }
-      .gallery {
-        gap: 1.4rem;
-        padding: 1.5rem 4vw;
-      }
-      .close {
-        top: 1rem;
-        right: 1rem;
-        width: 4rem;
-        height: 4rem;
-        font-size: 3.2rem;
-      }
-      .close::before {
-        inset: -2.5rem;
-      }
+      header { padding: 4rem 1rem 3rem; }
+      .nav-container { flex-direction: column; text-align: center; }
+      .nav-links { margin: 1.2rem 0; }
+      .gallery { gap: 1.6rem; padding: 1.8rem 4vw; }
+      .close { top: 1rem; right: 1rem; width: 4.2rem; height: 4.2rem; font-size: 3.4rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAVIGATIE -->
   <nav class="top-nav">
     <div class="nav-container">
-      <a href="#" class="logo">Kunst van Thibault P</a>
-
+      <a href="index.html" class="logo">Kunst van Thibault P</a>
+      
       <div class="nav-links">
-      <a href="index.html" class="active">Gallery</a>
-      <a href="about.html">Over mij</a>
-   </div>
+        <a href="index.html" class="active">Gallery</a>
+        <a href="about.html">Over mij</a>
+      </div>
+
       <div class="social-icons">
         <a href="https://www.instagram.com/polet_creations_/" target="_blank" aria-label="Instagram">
           <i class="fab fa-instagram"></i>
@@ -297,70 +277,97 @@
           <i class="fab fa-facebook"></i>
         </a>
       </div>
-      </div>
-    </div>
   </nav>
 
   <header>
     <h1>Mijn Kunstwerken</h1>
-    <p>Klik op een werk voor een grotere weergave – tik op achtergrond of × om te sluiten</p>
+    <p>Klik op een werk voor een grotere weergave – tik op de achtergrond of × om te sluiten</p>
   </header>
 
   <main class="gallery">
-
-    <!-- Kunstwerk 1 -->
     <figure>
       <a href="#img1" class="gallery-link">
-        <img src="images/kunstwerk-1.jpg" alt="Abstract blauw-rood landschap" loading="lazy">
+        <img src="images/jelly1 (20221030121321).jpg" alt="Jelly - Cocker spaniel" loading="lazy">
       </a>
-      <figcaption>Blauw-rood landschap • 2025 • acryl op doek • 100×80 cm</figcaption>
+      <figcaption>Jelly Cocker spaniel - 2022 - Paint Art Virtual </figcaption>
     </figure>
 
-    <!-- Kunstwerk 2 -->
     <figure>
       <a href="#img2" class="gallery-link">
-        <img src="images/kunstwerk-2.jpg" alt="Portret in pastelkleuren" loading="lazy">
+        <img src="images/Théodore (20221020050509).png" alt="Théodore - Cavia" loading="lazy">
       </a>
-      <figcaption>Portret van Luna • 2025 • pastel • 50×70 cm</figcaption>
+      <figcaption>Théodore - Cavia - 2022 - Paint Art Virtual</figcaption>
     </figure>
 
-    <!-- Kunstwerk 3 -->
     <figure>
       <a href="#img3" class="gallery-link">
-        <img src="images/kunstwerk-3.jpg" alt="Minimalistische compositie" loading="lazy">
+        <img src="images/Princesse (20221013080117).jpg" alt="Princesse - Cavia" loading="lazy">
       </a>
-      <figcaption>Compositie nr. 17 • 2024 • inkt • 40×40 cm</figcaption>
+      <figcaption>Princesse - Cavia - 2022 - Paint Art Virtual</figcaption>
     </figure>
 
-    <!-- Voeg hier meer kunstwerken toe -->
+    <figure>
+      <a href="#img4" class="gallery-link">
+        <img src="images/Project (20221027055049).jpg" alt="" loading="lazy">
+      </a>
+      <figcaption>Zon ondergang met zeilboot - 2022 - Paint Art Virtual</figcaption>
+    </figure>
 
+    <figure>
+      <a href="#img5" class="gallery-link">
+        <img src="images/.jpg" alt="" loading="lazy">
+      </a>
+      <figcaption>Princesse - Cavia - 2022 - Paint Art Virtual</figcaption>
+    </figure>
+
+    <figure>
+      <a href="#img6" class="gallery-link">
+        <img src="images/.jpg" alt="" loading="lazy">
+      </a>
+      <figcaption>Princesse - Cavia - 2022 - Paint Art Virtual</figcaption>
+    </figure>
+    <!-- voeg meer figuren toe -->
   </main>
 
-  <!-- LIGHTBOXEN met fixes -->
+  <!-- Lightbox -->
   <div class="lightbox" id="img1">
     <a href="#" class="close-area"></a>
     <a href="#" class="close">×</a>
-    <img src="images/kunstwerk-1.jpg" alt="Groot: Abstract blauw-rood landschap">
+    <img src="images/jelly1 (20221030121321).jpg" alt="Groot: Kunstwerk 1">
   </div>
 
   <div class="lightbox" id="img2">
     <a href="#" class="close-area"></a>
     <a href="#" class="close">×</a>
-    <img src="images/kunstwerk-2.jpg" alt="Groot: Portret van Luna">
+    <img src="images/Théodore (20221020050509).png" alt="Groot: Kunstwerk 2">
   </div>
 
   <div class="lightbox" id="img3">
     <a href="#" class="close-area"></a>
     <a href="#" class="close">×</a>
-    <img src="images/kunstwerk-3.jpg" alt="Groot: Compositie nr. 17">
+    <img src="images/Princesse (20221013080117).jpg" alt="Groot: Kunstwerk 3">
   </div>
 
-  <!-- Dupliceer .lightbox voor elke extra afbeelding -->
+  <div class="lightbox" id="img4">
+    <a href="#" class="close-area"></a>
+    <a href="#" class="close">×</a>
+    <img src="images/Project (20221027055049).jpg" alt="Groot: Kunstwerk 4">
+  </div>
+  
+  <div class="lightbox" id="img5">
+    <a href="#" class="close-area"></a>
+    <a href="#" class="close">×</a>
+    <img src="images/1.jpg" alt="Groot: Kunstwerk 5">
+  </div>
+
+  <div class="lightbox" id="img6">
+    <a href="#" class="close-area"></a>
+    <a href="#" class="close">×</a>
+    <img src="images/1.jpg" alt="Groot: Kunstwerk 6">
+  </div>
 
   <footer>
-    <p>© 2026 — Jouw Naam • 
-      <a href="https://github.com/jouw-gebruikersnaam/jouw-repo">GitHub</a>
-    </p>
+    <p>© 2026 — Thibault P</P> • <a href="https://github.com/jouw-gebruikersnaam/jouw-repo">GitHub</a></p>
   </footer>
 
 </body>
