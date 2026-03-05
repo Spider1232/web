@@ -5,43 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mijn Kunstwerken Gallery</title>
   
-  <!-- Font Awesome voor social icons -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: system-ui, -apple-system, sans-serif;
       color: #e0e0e0;
       line-height: 1.6;
-      -webkit-tap-highlight-color: transparent;
-
       background-image: url('images/background.jpg');
       background-size: 2000px 800px;
       background-position: center;
       background-attachment: fixed;
-      background-repeat: auto;
-
       background-color: rgba(174, 196, 214, 0.75);
       background-blend-mode: multiply;
     }
 
-    /* === LUXE GLASSMORPHISM MENU === */
+    /* === NAVIGATIE === */
     .top-nav {
-      background: rgba(20, 20, 35, 0.55);
+      background: rgba(20,20,35,0.55);
       backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
       padding: 1rem 5vw;
       position: sticky;
       top: 0;
-      z-index: 1000;
+      z-index: 2000;
       border-bottom: 1px solid rgba(212,175,55,0.35);
-      box-shadow: 0 4px 25px rgba(0,0,0,0.6);
     }
 
     .nav-container {
@@ -50,6 +40,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: relative;
     }
 
     .logo {
@@ -57,46 +48,34 @@
       font-size: 1.8rem;
       font-weight: 700;
       text-decoration: none;
-      letter-spacing: 1px;
       text-shadow: 0 0 12px rgba(212,175,55,0.4);
     }
 
+    /* DESKTOP MENU */
     .nav-links a {
       color: #e0e0e0;
       margin: 0 1.2rem;
       text-decoration: none;
       font-size: 1.15rem;
-      transition: 0.3s;
-      position: relative;
     }
 
     .nav-links a:hover,
-    .nav-links a.active {
-      color: #d4af37;
-    }
+    .nav-links a.active { color: #d4af37; }
 
     .social-icons a {
       color: #e0e0e0;
       font-size: 1.5rem;
       margin-left: 1rem;
-      transition: 0.3s;
     }
 
-    .social-icons a:hover {
-      color: #d4af37;
-      transform: scale(1.15);
-    }
-
-    /* Mobiel menu */
-    #menu-toggle {
-      display: none;
-    }
+    /* === MOBIEL MENU === */
+    #menu-toggle { display: none; }
 
     .hamburger {
       display: none;
       flex-direction: column;
-      cursor: pointer;
       gap: 6px;
+      cursor: pointer;
     }
 
     .hamburger span {
@@ -106,37 +85,52 @@
       border-radius: 3px;
     }
 
+    /* VERBERG MOBIEL MENU OP DESKTOP */
+    .mobile-menu {
+      display: none !important;
+    }
+
     @media (max-width: 800px) {
-      .hamburger {
-        display: flex;
-      }
+      .hamburger { display: flex; }
 
-      .nav-links,
-      .social-icons {
-        display: none;
-      }
+      .nav-links, .social-icons { display: none; }
 
-      #menu-toggle:checked ~ .nav-links,
-      #menu-toggle:checked ~ .social-icons {
-        display: flex;
+      #menu-toggle:checked ~ .mobile-menu { display: flex !important; }
+
+      .mobile-menu {
         flex-direction: column;
-        background: rgba(26,26,46,0.95);
-        padding: 1.5rem;
         position: absolute;
         top: 100%;
-        right: 5vw;
-        border-radius: 12px;
+        left: 0;
+        width: 100%;
+        background: rgba(26,26,46,0.97);
+        padding: 1.8rem 2rem;
+        border-bottom: 1px solid rgba(212,175,55,0.35);
         box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        z-index: 1500;
       }
 
-      .nav-links a {
-        margin: 0.8rem 0;
-        font-size: 1.3rem;
+      .mobile-menu a {
+        color: #e0e0e0;
+        font-size: 1.35rem;
+        padding: 0.8rem 0;
+        text-decoration: none;
       }
 
-      .social-icons a {
-        margin: 0.5rem 0;
+      .mobile-menu a:hover { color: #d4af37; }
+
+      .mobile-social {
+        margin-top: 1.2rem;
+        display: flex;
+        gap: 1.4rem;
       }
+
+      .mobile-social a {
+        font-size: 1.8rem;
+        color: #e0e0e0;
+      }
+
+      .mobile-social a:hover { color: #d4af37; }
     }
 
     /* === HEADER === */
@@ -149,15 +143,7 @@
     h1 {
       font-size: clamp(3rem, 8vw, 5.5rem);
       color: #d4af37;
-      margin-bottom: 0.6rem;
       text-shadow: 0 3px 12px rgba(0,0,0,0.8);
-    }
-
-    header p {
-      font-size: 1.35rem;
-      opacity: 0.9;
-      max-width: 680px;
-      margin: 0 auto;
     }
 
     /* === GALLERY === */
@@ -176,26 +162,19 @@
       border-radius: 14px;
       background: #111;
       box-shadow: 0 10px 35px rgba(0,0,0,0.7);
-      transition: all 0.4s ease;
+      transition: 0.4s;
     }
 
-    figure:hover {
-      transform: translateY(-14px);
-      box-shadow: 0 22px 55px rgba(212,175,55,0.28);
-    }
+    figure:hover { transform: translateY(-14px); }
 
     img {
       width: 100%;
-      height: auto;
-      display: block;
-      aspect-ratio: 4 / 5;
+      aspect-ratio: 4/5;
       object-fit: cover;
-      transition: transform 0.5s ease;
+      transition: 0.5s;
     }
 
-    figure:hover img {
-      transform: scale(1.09);
-    }
+    figure:hover img { transform: scale(1.09); }
 
     figcaption {
       padding: 1.3rem 1.5rem;
@@ -206,14 +185,9 @@
       bottom: 0;
       left: 0;
       right: 0;
-      transition: background 0.4s;
       display: flex;
       justify-content: space-between;
       align-items: center;
-    }
-
-    figure:hover figcaption {
-      background: linear-gradient(to top, rgba(211, 207, 150, 0.92), rgba(0,0,0,0.5));
     }
 
     /* ❤️ Hartjes */
@@ -221,14 +195,47 @@
       font-size: 1.6rem;
       cursor: pointer;
       color: #ccc;
-      transition: 0.3s ease;
-      user-select: none;
+      transition: 0.3s;
     }
 
     .heart.liked {
       color: #ff4d6d;
-      text-shadow: 0 0 10px rgba(255, 77, 109, 0.6);
       transform: scale(1.2);
+    }
+
+    /* 🔢 Teller */
+    .like-count {
+      margin-left: 6px;
+      font-size: 1.1rem;
+      color: #d4af37;
+      font-weight: 600;
+    }
+
+    /* ✨ Pop animatie */
+    .like-float {
+      position: absolute;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #d4af37;
+      animation: floatUp 0.8s ease-out forwards;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    @keyframes floatUp {
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-25px) scale(1.4); }
+    }
+
+    /* 🔔 Bounce */
+    .like-count.bump {
+      animation: bumpAnim 0.25s ease;
+    }
+
+    @keyframes bumpAnim {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.35); }
+      100% { transform: scale(1); }
     }
 
     /* === LIGHTBOX === */
@@ -237,67 +244,34 @@
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.96);
-      z-index: 9999;
+      z-index: 3000;
       align-items: center;
       justify-content: center;
       padding: 1rem;
-      overflow: auto;
     }
 
-    .lightbox:target {
-      display: flex;
-    }
-
-    .lightbox .close-area {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      cursor: pointer;
-    }
+    .lightbox:target { display: flex; }
 
     .lightbox img {
       max-width: 95vw;
       max-height: 92vh;
-      object-fit: contain;
       border-radius: 12px;
-      box-shadow: 0 0 70px rgba(212,175,55,0.35);
-      z-index: 2;
     }
 
     .close {
       position: absolute;
       top: 1.5rem;
       right: 1.5rem;
-      width: 3.8rem;
-      height: 3.8rem;
-      background: rgba(0,0,0,0.75);
-      color: white;
       font-size: 3rem;
-      line-height: 3.8rem;
-      text-align: center;
-      border-radius: 50%;
-      z-index: 10;
+      color: white;
       cursor: pointer;
-      transition: all 0.25s;
-    }
-
-    .close:hover {
-      background: #d4af37;
-      transform: scale(1.12);
     }
 
     footer {
       text-align: center;
       padding: 4rem 1rem 2rem;
-      font-size: 0.95rem;
       opacity: 0.75;
-      border-top: 1px solid #222;
       background: rgba(10,10,14,0.8);
-    }
-
-    footer a {
-      color: #d4af37;
-      text-decoration: none;
     }
   </style>
 </head>
@@ -315,6 +289,7 @@
         <span></span><span></span><span></span>
       </label>
 
+      <!-- DESKTOP MENU -->
       <div class="nav-links">
         <a href="index.html" class="active">Gallery</a>
         <a href="about.html">Over mij</a>
@@ -326,84 +301,107 @@
         <a href="https://www.facebook.com/polet.creations/" target="_blank"><i class="fab fa-facebook"></i></a>
       </div>
 
+      <!-- MOBIEL MENU -->
+      <div class="mobile-menu">
+        <a href="index.html">Gallery</a>
+        <a href="about.html">Over mij</a>
+
+        <div class="mobile-social">
+          <a href="https://www.instagram.com/polet_creations_/" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@polet_thibault" target="_blank"><i class="fab fa-tiktok"></i></a>
+          <a href="https://www.facebook.com/polet.creations/" target="_blank"><i class="fab fa-facebook"></i></a>
+        </div>
+      </div>
+
     </div>
   </nav>
 
   <header>
     <h1>Mijn Kunstwerken</h1>
-    <p>Klik op een werk voor een grotere weergave – tik op de achtergrond of × om te sluiten</p>
+    <p>Klik op een werk voor een grotere weergave</p>
   </header>
 
   <main class="gallery">
 
     <figure>
-      <a href="#img1"><img src="images/jelly1 (20221030121321).jpg" alt="Jelly - Cocker spaniel"></a>
+      <a href="#img1"><img src="images/jelly1 (20221030121321).jpg"></a>
       <figcaption>
-        Jelly Cocker spaniel - 2022 - Paint Art Virtual
-        <span class="heart">♡</span>
+        Jelly Cocker spaniel - 2022
+        <span><span class="heart" data-id="jelly1">♡</span><span class="like-count" data-id="jelly1">0</span></span>
       </figcaption>
     </figure>
 
     <figure>
-      <a href="#img2"><img src="images/Théodore (20221020050509).png" alt="Théodore - Cavia"></a>
+      <a href="#img2"><img src="images/Théodore (20221020050509).png"></a>
       <figcaption>
-        Théodore - Cavia - 2022 - Paint Art Virtual
-        <span class="heart">♡</span>
+        Théodore - Cavia - 2022
+        <span><span class="heart" data-id="theodore">♡</span><span class="like-count" data-id="theodore">0</span></span>
       </figcaption>
     </figure>
 
     <figure>
-      <a href="#img3"><img src="images/Princesse (20221013080117).jpg" alt="Princesse - Cavia"></a>
+      <a href="#img3"><img src="images/Princesse (20221013080117).jpg"></a>
       <figcaption>
-        Princesse - Cavia - 2022 - Paint Art Virtual
-        <span class="heart">♡</span>
+        Princesse - Cavia - 2022
+        <span><span class="heart" data-id="princesse">♡</span><span class="like-count" data-id="princesse">0</span></span>
       </figcaption>
     </figure>
 
     <figure>
-      <a href="#img4"><img src="images/Project (20221027055049).jpg" alt="Zonsondergang"></a>
+      <a href="#img4"><img src="images/Project (20221027055049).jpg"></a>
       <figcaption>
-        Zon ondergang met zeilboot - 2022 - Paint Art Virtual
-        <span class="heart">♡</span>
+        Zonsondergang - 2022
+        <span><span class="heart" data-id="zonsondergang">♡</span><span class="like-count" data-id="zonsondergang">0</span></span>
       </figcaption>
     </figure>
 
   </main>
 
   <!-- LIGHTBOXES -->
-  <div class="lightbox" id="img1">
-    <a href="#" class="close-area"></a>
-    <a href="#" class="close">×</a>
-    <img src="images/jelly1 (20221030121321).jpg">
-  </div>
-
-  <div class="lightbox" id="img2">
-    <a href="#" class="close-area"></a>
-    <a href="#" class="close">×</a>
-    <img src="images/Théodore (20221020050509).png">
-  </div>
-
-  <div class="lightbox" id="img3">
-    <a href="#" class="close-area"></a>
-    <a href="#" class="close">×</a>
-    <img src="images/Princesse (20221013080117).jpg">
-  </div>
-
-  <div class="lightbox" id="img4">
-    <a href="#" class="close-area"></a>
-    <a href="#" class="close">×</a>
-    <img src="images/Project (20221027055049).jpg">
-  </div>
+  <div class="lightbox" id="img1"><a href="#" class="close">×</a><img src="images/jelly1 (20221030121321).jpg"></div>
+  <div class="lightbox" id="img2"><a href="#" class="close">×</a><img src="images/Théodore (20221020050509).png"></div>
+  <div class="lightbox" id="img3"><a href="#" class="close">×</a><img src="images/Princesse (20221013080117).jpg"></div>
+  <div class="lightbox" id="img4"><a href="#" class="close">×</a><img src="images/Project (20221027055049).jpg"></div>
 
   <footer>
-    <p>© 2026 - Tekening Atelier Polet Thibault P • <a href="#">GitHub</a></p>
+    <p>© 2026 — Thibault P</p>
   </footer>
 
-  <!-- ❤️ Hartjes script -->
+  <!-- ❤️ Likes + Teller + Animaties -->
   <script>
     document.querySelectorAll('.heart').forEach(heart => {
+      const id = heart.dataset.id;
+      const countEl = document.querySelector('.like-count[data-id="' + id + '"]');
+
+      const savedLiked = localStorage.getItem('liked_' + id) === 'true';
+      const savedCount = parseInt(localStorage.getItem('likes_' + id)) || 0;
+
+      if (savedLiked) heart.classList.add('liked');
+      countEl.textContent = savedCount;
+
       heart.addEventListener('click', () => {
-        heart.classList.toggle('liked');
+        const isLiked = heart.classList.toggle('liked');
+        let count = parseInt(countEl.textContent);
+        const change = isLiked ? +1 : -1;
+        count += change;
+
+        countEl.textContent = count;
+        localStorage.setItem('liked_' + id, isLiked);
+        localStorage.setItem('likes_' + id, count);
+
+        const float = document.createElement('span');
+        float.classList.add('like-float');
+        float.textContent = change > 0 ? '+1' : '-1';
+
+        const rect = heart.getBoundingClientRect();
+        float.style.left = rect.left + rect.width / 2 + 'px';
+        float.style.top = rect.top - 5 + 'px';
+
+        document.body.appendChild(float);
+        setTimeout(() => float.remove(), 800);
+
+        countEl.classList.add('bump');
+        setTimeout(() => countEl.classList.remove('bump'), 250);
       });
     });
   </script>
