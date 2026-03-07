@@ -19,6 +19,7 @@ body {
   background-color:rgba(174,196,214,0.75);
   background-blend-mode:multiply;
 }
+
 .top-nav { background: rgba(20,20,35,0.55); backdrop-filter:blur(14px); padding:1rem 5vw; position:sticky; top:0; z-index:2000; border-bottom:1px solid rgba(212,175,55,0.35);}
 .nav-container { max-width:1400px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; position:relative; }
 .logo { color:#d4af37; font-size:1.8rem; font-weight:700; text-decoration:none; text-shadow:0 0 12px rgba(212,175,55,0.4);}
@@ -112,7 +113,6 @@ Princesse - Cavia - 2022
 <span><span class="heart" data-id="princesse">♡</span><span class="like-count" data-id="princesse">0</span></span>
 </figcaption>
 </figure>
-
 </main>
 
 <div class="lightbox" id="img1"><a href="#" class="close">×</a><img src="images/jelly1 (20221030121321).jpg"></div>
@@ -128,10 +128,11 @@ document.querySelectorAll('.heart').forEach(heart=>{
   const id = heart.dataset.id;
   const countEl = document.querySelector('.like-count[data-id="'+id+'"]');
 
-  // Check localStorage first
-  let savedCount = parseInt(localStorage.getItem('likes_'+id)) || 0;
-  const liked = localStorage.getItem('liked_'+id) === 'true';
-  if(liked) heart.classList.add('liked');
+  // Laad sessie-waarden
+  const savedCount = parseInt(sessionStorage.getItem('likes_'+id)) || 0;
+  const savedLiked = sessionStorage.getItem('liked_'+id) === 'true';
+
+  if(savedLiked) heart.classList.add('liked');
   countEl.textContent = savedCount;
 
   heart.addEventListener('click', ()=>{
@@ -141,11 +142,7 @@ document.querySelectorAll('.heart').forEach(heart=>{
 
     countEl.textContent = count;
 
-    // Save to localStorage
-    localStorage.setItem('likes_'+id,count);
-    localStorage.setItem('liked_'+id,isLiked);
-
-    // Sync to sessionStorage (cross-page same session)
+    // Opslaan in sessionStorage
     sessionStorage.setItem('likes_'+id,count);
     sessionStorage.setItem('liked_'+id,isLiked);
 
@@ -162,14 +159,6 @@ document.querySelectorAll('.heart').forEach(heart=>{
     countEl.classList.add('bump');
     setTimeout(()=>countEl.classList.remove('bump'),250);
   });
-});
-
-// Optional: sync likes on page load from sessionStorage
-document.querySelectorAll('.heart').forEach(heart=>{
-  const id = heart.dataset.id;
-  if(sessionStorage.getItem('liked_'+id) === 'true') heart.classList.add('liked');
-  const count = parseInt(sessionStorage.getItem('likes_'+id));
-  if(!isNaN(count)) document.querySelector('.like-count[data-id="'+id+'"]').textContent = count;
 });
 </script>
 
