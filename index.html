@@ -1,325 +1,231 @@
 <!DOCTYPE html>
 <html lang="nl">
-
 <head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mijn Kunstwerken Gallery</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Mijn Kunstwerken</title>
-
+<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
+* { margin:0; padding:0; box-sizing:border-box; }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-font-family:system-ui;
-color:#e0e0e0;
-background:#0f0f16;
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #e0e0e0;
+  line-height: 1.6;
+  background-image: url('images/background.jpg');
+  background-size: 2000px 800px;
+  background-position: center;
+  background-attachment: fixed;
+  background-color: rgba(174,196,214,0.75);
+  background-blend-mode: multiply;
 }
 
 /* NAV */
-
-nav{
-background:#161624;
-padding:1rem 5vw;
-display:flex;
-justify-content:space-between;
-align-items:center;
+.top-nav {
+  background: rgba(20,20,35,0.55);
+  backdrop-filter: blur(14px);
+  padding: 1rem 5vw;
+  position: sticky;
+  top:0;
+  z-index:2000;
+  border-bottom:1px solid rgba(212,175,55,0.35);
 }
 
-.logo{
-color:#d4af37;
-font-size:1.6rem;
-font-weight:bold;
-text-decoration:none;
+.nav-container {
+  max-width:1400px;
+  margin:0 auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:relative;
 }
 
-.nav-links a{
-margin-left:1rem;
-color:#ddd;
-text-decoration:none;
+.logo {
+  color:#d4af37;
+  font-size:1.8rem;
+  font-weight:700;
+  text-decoration:none;
+  text-shadow:0 0 12px rgba(212,175,55,0.4);
 }
 
-header{
-text-align:center;
-padding:3rem 1rem;
+/* Desktop menu */
+.nav-links a { color:#e0e0e0; margin:0 1.2rem; text-decoration:none; font-size:1.15rem;}
+.nav-links a:hover, .nav-links a.active { color:#d4af37; }
+
+.social-icons a { color:#e0e0e0; font-size:1.5rem; margin-left:1rem; }
+
+/* Mobile menu */
+#menu-toggle { display:none; }
+.hamburger { display:none; flex-direction:column; gap:6px; cursor:pointer;}
+.hamburger span { width:28px; height:3px; background:#d4af37; border-radius:3px; }
+.mobile-menu { display:none !important; }
+
+@media(max-width:800px){
+  .hamburger { display:flex; }
+  .nav-links, .social-icons { display:none; }
+  #menu-toggle:checked ~ .mobile-menu { display:flex !important; }
+  .mobile-menu { flex-direction:column; position:absolute; top:100%; left:0; width:100%; background: rgba(26,26,46,0.97); padding:1.8rem 2rem; border-bottom:1px solid rgba(212,175,55,0.35); box-shadow:0 10px 30px rgba(0,0,0,0.6); z-index:1500; }
+  .mobile-menu a { color:#e0e0e0; font-size:1.35rem; padding:0.8rem 0; text-decoration:none; }
+  .mobile-menu a:hover { color:#d4af37; }
+  .mobile-social { margin-top:1.2rem; display:flex; gap:1.4rem; }
+  .mobile-social a { font-size:1.8rem; color:#e0e0e0; }
+  .mobile-social a:hover { color:#d4af37; }
 }
 
-h1{
-font-size:3rem;
-color:#d4af37;
-}
+/* Header */
+header { text-align:center; padding:6rem 1rem 4rem; background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);}
+h1 { font-size:clamp(3rem,8vw,5.5rem); color:#d4af37; text-shadow:0 3px 12px rgba(0,0,0,0.8);}
 
-/* GALLERY */
+/* Gallery */
+.gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:2.2rem; padding:2rem 5vw 4rem; max-width:1800px; margin:0 auto; }
+figure { position:relative; overflow:hidden; border-radius:14px; background:#111; box-shadow:0 10px 35px rgba(0,0,0,0.7); transition:0.4s;}
+figure:hover { transform:translateY(-14px); }
+img { width:100%; aspect-ratio:4/5; object-fit:cover; transition:0.5s; }
+figure:hover img { transform:scale(1.09); }
 
-.gallery{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-gap:2rem;
-padding:2rem 5vw;
-}
+figcaption { padding:1.3rem 1.5rem; font-size:0.98rem; color:#ccc; background:linear-gradient(to top, rgba(0,0,0,0.85), transparent); position:absolute; bottom:0; left:0; right:0; display:flex; justify-content:space-between; align-items:center; }
 
-figure{
-position:relative;
-overflow:hidden;
-border-radius:12px;
-background:#111;
-}
+.heart { font-size:1.6rem; cursor:pointer; color:#ccc; transition:0.3s;}
+.heart.liked { color:#ff4d6d; transform:scale(1.2); }
+.like-count { margin-left:6px; font-size:1.1rem; color:#d4af37; font-weight:600; }
+.like-float { position:absolute; font-size:1.2rem; font-weight:bold; color:#d4af37; animation:floatUp 0.8s ease-out forwards; pointer-events:none; z-index:999; }
+@keyframes floatUp { 0% {opacity:1; transform:translateY(0) scale(1);} 100%{opacity:0; transform:translateY(-25px) scale(1.4);} }
+.like-count.bump { animation:bumpAnim 0.25s ease; }
+@keyframes bumpAnim {0%{transform:scale(1);}50%{transform:scale(1.35);}100%{transform:scale(1);}}
 
-img{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
-/* CAPTION */
-
-figcaption{
-position:absolute;
-bottom:0;
-left:0;
-right:0;
-background:linear-gradient(to top,rgba(0,0,0,.8),transparent);
-padding:1rem;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-/* HEART */
-
-.heart{
-font-size:1.5rem;
-cursor:pointer;
-color:#ccc;
-}
-
-.heart.liked{
-color:#ff4d6d;
-}
-
-.like-count{
-margin-left:5px;
-color:#d4af37;
-}
-
-/* LIGHTBOX */
-
-.lightbox{
-display:none;
-position:fixed;
-inset:0;
-background:black;
-justify-content:center;
-align-items:center;
-z-index:1000;
-}
-
-.lightbox:target{
-display:flex;
-}
-
-.lightbox img{
-max-width:95%;
-max-height:95%;
-}
-
-.close{
-position:absolute;
-top:20px;
-right:30px;
-font-size:3rem;
-color:white;
-text-decoration:none;
-}
-
+/* Lightbox */
+.lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.96); z-index:3000; align-items:center; justify-content:center; padding:1rem; }
+.lightbox:target { display:flex; }
+.lightbox img { max-width:100vw; max-height:100vh; width:auto; height:auto; object-fit:contain; border-radius:12px; box-shadow:0 0 70px rgba(212,175,55,0.35);}
+.close { position:absolute; top:1.5rem; right:1.5rem; font-size:3rem; color:white; cursor:pointer; }
+footer { text-align:center; padding:4rem 1rem 2rem; opacity:0.75; background: rgba(10,10,14,0.8);}
 </style>
-
 </head>
 
 <body>
 
-<nav>
+<!-- NAV -->
+<nav class="top-nav">
+<div class="nav-container">
+<a href="index.html" class="logo">Kunst van Thibault P</a>
 
-<a class="logo" href="#">Kunst van Thibault</a>
+<input type="checkbox" id="menu-toggle">
+<label for="menu-toggle" class="hamburger"><span></span><span></span><span></span></label>
 
 <div class="nav-links">
-<a href="#">Gallery</a>
-<a href="#">Over mij</a>
+<a href="index.html" class="active">Gallery</a>
+<a href="about.html">Over mij</a>
 </div>
 
+<div class="social-icons">
+<a href="https://www.instagram.com/polet_creations_/" target="_blank"><i class="fab fa-instagram"></i></a>
+<a href="https://www.tiktok.com/@polet_thibault" target="_blank"><i class="fab fa-tiktok"></i></a>
+<a href="https://www.facebook.com/polet.creations/" target="_blank"><i class="fab fa-facebook"></i></a>
+</div>
+
+<div class="mobile-menu">
+<a href="index.html">Gallery</a>
+<a href="about.html">Over mij</a>
+<div class="mobile-social">
+<a href="https://www.instagram.com/polet_creations_/" target="_blank"><i class="fab fa-instagram"></i></a>
+<a href="https://www.tiktok.com/@polet_thibault" target="_blank"><i class="fab fa-tiktok"></i></a>
+<a href="https://www.facebook.com/polet.creations/" target="_blank"><i class="fab fa-facebook"></i></a>
+</div>
+</div>
+</div>
 </nav>
 
 <header>
-
 <h1>Mijn Kunstwerken</h1>
-<p>Klik op een werk voor vergroting</p>
-
+<p>Klik op een werk voor een grotere weergave</p>
 </header>
 
 <main class="gallery">
-
 <figure>
-
-<a href="#img1">
-<img src="images/jelly1.jpg" loading="lazy">
-</a>
-
+<a href="#img1"><img src="images/jelly1 (20221030121321).jpg"></a>
 <figcaption>
-
-Jelly Cocker spaniel
-
-<span>
-<span class="heart" data-id="jelly1">♡</span>
-<span class="like-count" data-id="jelly1">0</span>
-</span>
-
+Jelly Cocker spaniel - 2022
+<span><span class="heart" data-id="jelly1">♡</span><span class="like-count" data-id="jelly1">0</span></span>
 </figcaption>
-
 </figure>
 
 <figure>
-
-<a href="#img2">
-<img src="images/theodore.png" loading="lazy">
-</a>
-
+<a href="#img2"><img src="images/Théodore (20221020050509).png"></a>
 <figcaption>
-
-Théodore Cavia
-
-<span>
-<span class="heart" data-id="theodore">♡</span>
-<span class="like-count" data-id="theodore">0</span>
-</span>
-
+Théodore - Cavia - 2022
+<span><span class="heart" data-id="theodore">♡</span><span class="like-count" data-id="theodore">0</span></span>
 </figcaption>
-
 </figure>
 
 <figure>
-
-<a href="#img3">
-<img src="images/princesse.jpg" loading="lazy">
-</a>
-
+<a href="#img3"><img src="images/Princesse (20221013080117).jpg"></a>
 <figcaption>
-
-Princesse
-
-<span>
-<span class="heart" data-id="princesse">♡</span>
-<span class="like-count" data-id="princesse">0</span>
-</span>
-
+Princesse - Cavia - 2022
+<span><span class="heart" data-id="princesse">♡</span><span class="like-count" data-id="princesse">0</span></span>
 </figcaption>
-
 </figure>
 
+<figure>
+<a href="#img4"><img src="images/Project (20221027055049).jpg"></a>
+<figcaption>
+Zonsondergang met een mooie zeilboot - 2022
+<span><span class="heart" data-id="zonsondergang">♡</span><span class="like-count" data-id="zonsondergang">0</span></span>
+</figcaption>
+</figure>
+
+<figure>
+<a href="#img0"><img src="images/Zonondergang.jpg"></a>
+<figcaption>
+Zonsondergang in Stormkleuren
+<span><span class="heart" data-id="Zonondergang">♡</span><span class="like-count" data-id="Zonondergang">0</span></span>
+</figcaption>
+</figure>
 </main>
 
-<!-- LIGHTBOX -->
+<!-- LIGHTBOXES -->
+<div class="lightbox" id="img1"><a href="#" class="close">×</a><img src="images/jelly1 (20221030121321).jpg"></div>
+<div class="lightbox" id="img2"><a href="#" class="close">×</a><img src="images/Théodore (20221020050509).png"></div>
+<div class="lightbox" id="img3"><a href="#" class="close">×</a><img src="images/Princesse (20221013080117).jpg"></div>
+<div class="lightbox" id="img4"><a href="#" class="close">×</a><img src="images/Project (20221027055049).jpg"></div>
+<div class="lightbox" id="img0"><a href="#" class="close">×</a><img src="images/Zonondergang.jpg"></div>
 
-<div class="lightbox" id="img1">
-<a href="#" class="close">×</a>
-<img src="images/jelly1.jpg">
-</div>
-
-<div class="lightbox" id="img2">
-<a href="#" class="close">×</a>
-<img src="images/theodore.png">
-</div>
-
-<div class="lightbox" id="img3">
-<a href="#" class="close">×</a>
-<img src="images/princesse.jpg">
-</div>
-
-<footer style="text-align:center;padding:2rem;">
-© 2026 — Thibault P
+<footer>
+<p>© 2026 — Thibault P</p>
 </footer>
 
+<!-- ❤️ Hartjes gedeeld via Google Sheets -->
 <script>
+const API = "https://script.google.com/macros/s/AKfycbyEsSIyP2z5VvK3So4p4AeuObw-yjXJqxJhyMInnyVsUbl1PaFXsgkaM_tViXAaiDhSyw/exec";
 
-/* GOOGLE SHEET API */
-
-const API = "https://script.google.com/macros/s/AKfycbyEsSIyP2z5VvK3So4p4AeuObw-yjXJqxJhyMInnyVsUbl1PaFXsgkaM_tViXAaiDhSyw/exec"
-
-
-/* LOAD LIKES */
-
+// Likes ophalen
 fetch(API)
+.then(res => res.json())
+.then(data => {
+  document.querySelectorAll('.like-count').forEach(el => {
+    const id = el.dataset.id;
+    if(data[id] !== undefined) el.textContent = data[id];
+  });
+});
 
-.then(res=>res.json())
-
-.then(data=>{
-
-document.querySelectorAll('.like-count').forEach(el=>{
-
-const id = el.dataset.id
-
-if(data[id]){
-el.textContent = data[id]
-}
-
-})
-
-})
-
-
-/* CLICK HEART */
-
-document.querySelectorAll('.heart').forEach(heart=>{
-
-heart.addEventListener('click',()=>{
-
-const id = heart.dataset.id
-
-fetch(API,{
-
-method:'POST',
-
-body:new URLSearchParams({
-id:id
-})
-
-})
-
-.then(res=>res.text())
-
-.then(count=>{
-
-document.querySelector('.like-count[data-id="'+id+'"]').textContent = count
-
-})
-
-heart.classList.toggle('liked')
-
-})
-
-})
-
-
-/* ESC CLOSE LIGHTBOX */
-
-document.addEventListener("keydown",e=>{
-
-if(e.key==="Escape"){
-location.hash=""
-}
-
-})
-
+// Hartjes klikken
+document.querySelectorAll('.heart').forEach(heart => {
+  heart.addEventListener('click', () => {
+    const id = heart.dataset.id;
+    fetch(API, {
+      method: "POST",
+      body: new URLSearchParams({id:id})
+    })
+    .then(res => res.text())
+    .then(count => {
+      document.querySelector('.like-count[data-id="'+id+'"]').textContent = count;
+    });
+    heart.classList.toggle("liked");
+  });
+});
 </script>
 
 </body>
 </html>
-
-
