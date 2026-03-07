@@ -143,8 +143,14 @@ document.querySelectorAll('.heart').forEach(heart=>{
     countEl.textContent = count;
 
     // Opslaan in sessionStorage
-    sessionStorage.setItem('likes_'+id,count);
-    sessionStorage.setItem('liked_'+id,isLiked);
+  const scriptURL = "https://script.google.com/macros/s/AKfycbzSLTJammri2lUPzcciU2sy_Obm_ZJYPskADT-edGPyelbOWmFnJn5KKlzhPfiIMp2iAg/exec"; 
+
+  heart.addEventListener('click', async ()=>{
+  const id = heart.dataset.id;
+  const response = await fetch(scriptURL + "?id=" + id, {method:"POST"});
+  const count = await response.text();
+  countEl.textContent = count;
+  heart.classList.add('liked');
 
     // Pop animatie
     const float = document.createElement('span');
@@ -164,3 +170,4 @@ document.querySelectorAll('.heart').forEach(heart=>{
 
 </body>
 </html>
+
