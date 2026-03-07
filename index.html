@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mijn Kunstwerken Gallery</title>
@@ -26,6 +27,7 @@ background-blend-mode:multiply;
 }
 
 /* NAV */
+
 .top-nav{
 background:rgba(20,20,35,0.55);
 backdrop-filter:blur(14px);
@@ -70,6 +72,8 @@ color:#e0e0e0;
 font-size:1.5rem;
 margin-left:1rem;
 }
+
+/* MOBILE */
 
 #menu-toggle{display:none;}
 
@@ -130,8 +134,6 @@ gap:1.4rem;
 font-size:1.8rem;
 color:#e0e0e0;
 }
-
-.mobile-social a:hover{color:#d4af37;}
 
 }
 
@@ -199,6 +201,8 @@ justify-content:space-between;
 align-items:center;
 }
 
+/* LIKES */
+
 .heart{
 font-size:1.6rem;
 cursor:pointer;
@@ -256,7 +260,9 @@ justify-content:center;
 padding:1rem;
 }
 
-.lightbox:target{display:flex;}
+.lightbox:target{
+display:flex;
+}
 
 .lightbox img{
 max-width:100vw;
@@ -274,6 +280,8 @@ font-size:3rem;
 color:white;
 cursor:pointer;
 }
+
+/* FOOTER */
 
 footer{
 text-align:center;
@@ -293,6 +301,7 @@ background:rgba(10,10,14,.8);
 <a href="index.html" class="logo">Kunst van Thibault P</a>
 
 <input type="checkbox" id="menu-toggle">
+
 <label for="menu-toggle" class="hamburger">
 <span></span>
 <span></span>
@@ -326,49 +335,76 @@ background:rgba(10,10,14,.8);
 </nav>
 
 <header>
+
 <h1>Mijn Kunstwerken</h1>
 <p>Klik op een werk voor een grotere weergave</p>
+
 </header>
 
 <main class="gallery">
 
 <figure>
-<a href="#img1"><img src="images/jelly1 (20221030121321).jpg" alt="Jelly Cocker Spaniel tekening 2022" loading="lazy"></a>
+<a href="#img1">
+<img src="images/jelly1 (20221030121321).jpg" alt="Jelly Cocker Spaniel tekening 2022" loading="lazy">
+</a>
 <figcaption>
 Jelly Cocker spaniel - 2022
-<span><span class="heart" data-id="jelly1">♡</span><span class="like-count" data-id="jelly1">0</span></span>
+<span>
+<span class="heart" data-id="jelly1">♡</span>
+<span class="like-count" data-id="jelly1">0</span>
+</span>
 </figcaption>
 </figure>
 
 <figure>
-<a href="#img2"><img src="images/Théodore (20221020050509).png" alt="Théodore Cavia tekening 2022" loading="lazy"></a>
+<a href="#img2">
+<img src="images/Théodore (20221020050509).png" alt="Théodore Cavia tekening 2022" loading="lazy">
+</a>
 <figcaption>
 Théodore - Cavia - 2022
-<span><span class="heart" data-id="theodore">♡</span><span class="like-count" data-id="theodore">0</span></span>
+<span>
+<span class="heart" data-id="theodore">♡</span>
+<span class="like-count" data-id="theodore">0</span>
+</span>
 </figcaption>
 </figure>
 
 <figure>
-<a href="#img3"><img src="images/Princesse (20221013080117).jpg" alt="Princesse Cavia tekening 2022" loading="lazy"></a>
+<a href="#img3">
+<img src="images/Princesse (20221013080117).jpg" alt="Princesse Cavia tekening 2022" loading="lazy">
+</a>
 <figcaption>
 Princesse - Cavia - 2022
-<span><span class="heart" data-id="princesse">♡</span><span class="like-count" data-id="princesse">0</span></span>
+<span>
+<span class="heart" data-id="princesse">♡</span>
+<span class="like-count" data-id="princesse">0</span>
+</span>
 </figcaption>
 </figure>
 
 <figure>
-<a href="#img4"><img src="images/Project (20221027055049).jpg" alt="Zonsondergang met zeilboot tekening 2022" loading="lazy"></a>
+<a href="#img4">
+<img src="images/Project (20221027055049).jpg" alt="Zonsondergang met zeilboot tekening 2022" loading="lazy">
+</a>
 <figcaption>
 Zonsondergang met een mooie zeilboot - 2022
-<span><span class="heart" data-id="zonsondergang">♡</span><span class="like-count" data-id="zonsondergang">0</span></span>
+<span>
+<span class="heart" data-id="zonsondergang">♡</span>
+<span class="like-count" data-id="zonsondergang">0</span>
+</span>
 </figcaption>
 </figure>
 
 <figure>
-<a href="#img0"><img src="images/Zonondergang.jpg" alt="Zonsondergang in stormkleuren tekening" loading="lazy"></a>
+<a href="#img0">
+<img src="images/Zonondergang.jpg" alt="Zonsondergang in stormkleuren tekening" loading="lazy">
+</a>
 <figcaption>
 Zonsondergang in Stormkleuren
-<span><span class="heart" data-id="zonsondergang2">♡</span><span class="like-count" data-id="zonsondergang2">0</span></span>
+<span>
+<span class="heart" data-id="zonsondergang2">♡</span>
+<span class="like-count" data-id="zonsondergang2">0</span>
+</span>
 </figcaption>
 </figure>
 
@@ -386,67 +422,86 @@ Zonsondergang in Stormkleuren
 
 <script>
 
+/* LIKE SYSTEM */
+
 document.querySelectorAll('.heart').forEach(heart=>{
 
-const id=heart.dataset.id;
-const countEl=document.querySelector('.like-count[data-id="'+id+'"]');
+const id=heart.dataset.id
+const countEl=document.querySelector('.like-count[data-id="'+id+'"]')
 
-const savedLiked=localStorage.getItem('liked_'+id)==='true';
-const savedCount=parseInt(localStorage.getItem('likes_'+id))||0;
+const savedLiked=localStorage.getItem('liked_'+id)==='true'
+const savedCount=parseInt(localStorage.getItem('likes_'+id))||0
 
-if(savedLiked)heart.classList.add('liked');
+if(savedLiked)heart.classList.add('liked')
 
-countEl.textContent=savedCount;
+countEl.textContent=savedCount
 
 heart.addEventListener('click',()=>{
 
-const isLiked=heart.classList.toggle('liked');
+const isLiked=heart.classList.toggle('liked')
 
-let count=parseInt(countEl.textContent);
+let count=parseInt(countEl.textContent)
 
-const change=isLiked?1:-1;
+const change=isLiked?1:-1
 
-count+=change;
+count+=change
 
-countEl.textContent=count;
+countEl.textContent=count
 
-localStorage.setItem('liked_'+id,isLiked);
-localStorage.setItem('likes_'+id,count);
+localStorage.setItem('liked_'+id,isLiked)
+localStorage.setItem('likes_'+id,count)
 
-const float=document.createElement('span');
+const float=document.createElement('span')
 
-float.classList.add('like-float');
+float.classList.add('like-float')
 
-float.textContent=change>0?'+1':'-1';
+float.textContent=change>0?'+1':'-1'
 
-const rect=heart.getBoundingClientRect();
+const rect=heart.getBoundingClientRect()
 
-float.style.left=rect.left+rect.width/2+'px';
-float.style.top=rect.top-5+'px';
+float.style.left=rect.left+rect.width/2+'px'
+float.style.top=rect.top-5+'px'
 
-document.body.appendChild(float);
+document.body.appendChild(float)
 
-setTimeout(()=>float.remove(),800);
+setTimeout(()=>float.remove(),800)
 
-countEl.classList.add('bump');
+countEl.classList.add('bump')
 
-setTimeout(()=>countEl.classList.remove('bump'),250);
+setTimeout(()=>countEl.classList.remove('bump'),250)
 
-});
+})
 
-});
+})
 
-/* mobiel menu sluiten */
+/* MOBILE MENU CLOSE */
 
 document.querySelectorAll('.mobile-menu a').forEach(link=>{
 link.addEventListener('click',()=>{
-document.getElementById('menu-toggle').checked=false;
-});
-});
+document.getElementById('menu-toggle').checked=false
+})
+})
+
+/* LIGHTBOX CLOSE OUTSIDE */
+
+document.querySelectorAll('.lightbox').forEach(box=>{
+box.addEventListener('click',e=>{
+if(e.target===box){
+window.location.hash=""
+}
+})
+})
+
+/* ESC CLOSE */
+
+document.addEventListener('keydown',e=>{
+if(e.key==="Escape"){
+window.location.hash=""
+}
+})
 
 </script>
 
 </body>
 </html>
 ```
-
